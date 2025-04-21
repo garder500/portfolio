@@ -2,14 +2,14 @@
 title: WAR OF CODE - ORM & CLI rust !
 description: Le cahier des charge du premier event war of code
 date: 2023-07-14T21:34:10.846Z
-category: war_of_code
+tags:
+  - Rust
 thumbnail: assets/11-database-drivers-and-orms-for-rust-that-are-ready-for-production.avif
 author: Garder500
 layout: post
 toc: false
+category: war_of_code
 ---
-# War Of Code | ORM & CLI MySQL
-
 ## La première partie du défi reposera sur la confection d'un ORM
 
 L'orm doit contenir la possibilité de géré ces tables SQL via le code.
