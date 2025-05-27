@@ -1,16 +1,257 @@
-<div id="projects" class="mt-20 flex flex-col gap-5">
-  <h2 class="uppercase text-4xl font-semibold">Projects</h2>
-  <ul class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+<section id="projects" class="py-16" data-animate>
+  <div class="text-center mb-12">
+    <h2 class="text-4xl lg:text-5xl font-bold text-blue-400 mb-4">
+      Featured Projects
+    </h2>
+    <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+      Discover the automation solutions and tools we've built to streamline workflows
+    </p>
+    <div class="w-24 h-1 bg-blue-500 mx-auto mt-4"></div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     {% for project in page.projects %}
-    <a href="{{ project.link }}">
-        <li class="-skew-x-5 bg-zinc-800 h-full rounded-lg overflow-hidden flex flex-col justify-between gap-5 hover:bg-zinc-700 transition">
-          <div class="p-5 grid gap-2">
-            <h3 class="text-2xl">{{ project.title }}</h3>
-            <p>{{ project.description }}</p>
+    <article class="group relative bg-slate-800/50 border border-blue-500/20 rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-400/40">
+      <!-- Project Image -->
+      <div class="relative overflow-hidden">
+        <img class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-110"
+             src="https://opengraph.githubassets.com/eaf95acb7a4845b6e1b275d8e4d06d26c59443e26c788ef62cea6d9922e38a06/garder500/{{ project.link | split: '/' | last }}"
+             alt="{{ project.title }} Preview"
+             loading="lazy">
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+        <!-- Project Type Badge -->
+        {% if project.type %}
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 text-xs font-semibold bg-blue-600/90 text-white rounded-full backdrop-blur-sm">
+            {{ project.type }}
+          </span>
+        </div>
+        {% endif %}
+
+        <!-- Status Badge -->
+        {% if project.status %}
+        <div class="absolute top-4 right-4">
+          <span class="px-2 py-1 text-xs font-medium rounded-full
+            {% if project.status == 'active' %}bg-green-600/90 text-green-100{% endif %}
+            {% if project.status == 'development' %}bg-yellow-600/90 text-yellow-100{% endif %}
+            {% if project.status == 'archived' %}bg-gray-600/90 text-gray-100{% endif %}
+            backdrop-blur-sm">
+            {% if project.status == 'active' %}
+              <i class="fas fa-check-circle mr-1"></i>Active
+            {% elsif project.status == 'development' %}
+              <i class="fas fa-code mr-1"></i>In Development
+            {% elsif project.status == 'archived' %}
+              <i class="fas fa-archive mr-1"></i>Archived
+            {% endif %}
+          </span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Project Content -->
+      <div class="p-6">
+        <!-- Title and Description -->
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-blue-400 mb-2 group-hover:text-blue-300 transition-colors">
+            {{ project.title }}
+          </h3>
+          <p class="text-slate-300 leading-relaxed line-clamp-3">
+            {{ project.description }}
+          </p>
+        </div>
+
+        <!-- Technologies Used -->
+        {% if project.technologies %}
+        <div class="flex flex-wrap gap-2 mb-4">
+          {% for tech in project.technologies %}
+          <span class="px-2 py-1 text-xs bg-slate-700/50 text-slate-300 rounded border border-slate-600/50">
+            {{ tech }}
+          </span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Project Stats -->
+        {% if project.stats %}
+        <div class="grid grid-cols-3 gap-4 mb-4 text-center">
+          {% if project.stats.stars %}
+          <div class="text-sm">
+            <div class="text-blue-400 font-semibold">{{ project.stats.stars }}</div>
+            <div class="text-slate-400 text-xs">Stars</div>
           </div>
-          <img class="aspect-[20/9] w-full object-cover" src="https://opengraph.githubassets.com/eaf95acb7a4845b6e1b275d8e4d06d26c59443e26c788ef62cea6d9922e38a06/garder500/{{ project.link | split: '/' | last }}" alt="{{ project.title }} OpenGraph Image">
-        </li>
-      </a>  
+          {% endif %}
+          {% if project.stats.forks %}
+          <div class="text-sm">
+            <div class="text-blue-400 font-semibold">{{ project.stats.forks }}</div>
+            <div class="text-slate-400 text-xs">Forks</div>
+          </div>
+          {% endif %}
+          {% if project.stats.downloads %}
+          <div class="text-sm">
+            <div class="text-blue-400 font-semibold">{{ project.stats.downloads }}</div>
+            <div class="text-slate-400 text-xs">Downloads</div>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="flex items-center justify-between">
+          <div class="flex space-x-3">
+            <!-- Main Link -->
+            <a href="{{ project.link }}"
+               target="_blank"
+               class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105">
+              <i class="fab fa-github mr-2"></i>
+              View Project
+            </a>
+
+            <!-- Demo Link -->
+            {% if project.demo %}
+            <a href="{{ project.demo }}"
+               target="_blank"
+               class="inline-flex items-center px-4 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/10 font-semibold rounded-lg transition-colors">
+              <i class="fas fa-external-link-alt mr-2"></i>
+              Demo
+            </a>
+            {% endif %}
+          </div>
+
+          <!-- Last Updated -->
+          {% if project.updated %}
+          <div class="text-xs text-slate-400">
+            Updated {{ project.updated }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Hover Effect Indicator -->
+      <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <i class="fas fa-arrow-up-right text-blue-400"></i>
+      </div>
+    </article>
     {% endfor %}
-  </ul>
-</div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="mt-16 text-center">
+    <div class="bg-gradient-to-r from-blue-800/20 to-blue-600/20 border border-blue-500/30 rounded-2xl p-8">
+      <h3 class="text-2xl font-bold text-blue-400 mb-4">Want to Collaborate?</h3>
+      <p class="text-slate-300 mb-6 max-w-2xl mx-auto">
+        I'm always looking for new opportunities to build innovative automation solutions.
+        Let's create something amazing together!
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://github.com/garder500"
+           target="_blank"
+           class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+          <i class="fab fa-github mr-2"></i>
+          View All Projects
+        </a>
+        <a href="#footer"
+           class="inline-flex items-center px-6 py-3 border border-blue-500 text-blue-400 hover:bg-blue-500/10 font-semibold rounded-lg transition-colors">
+          <i class="fas fa-envelope mr-2"></i>
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Line clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Project card animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Staggered animation */
+.project-card:nth-child(1) { animation-delay: 0.1s; }
+.project-card:nth-child(2) { animation-delay: 0.2s; }
+.project-card:nth-child(3) { animation-delay: 0.3s; }
+.project-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .project-card {
+    margin-bottom: 1rem;
+  }
+}
+</style>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const projectImages = document.querySelectorAll('#projects img');
+
+  projectImages.forEach(img => {
+    img.addEventListener('error', function() {
+      // Marquer l'image comme en erreur
+      this.setAttribute('data-error', 'true');
+
+      // Créer un placeholder
+      const placeholder = document.createElement('div');
+      placeholder.className = 'project-placeholder aspect-[16/9] w-full bg-gradient-to-br from-blue-600/20 to-blue-800/20 flex items-center justify-center';
+      placeholder.innerHTML = `
+        <div class="text-center">
+          <i class="fas fa-code text-4xl text-blue-400 mb-2"></i>
+          <p class="text-blue-300 font-semibold">${this.alt.replace(' Preview', '')}</p>
+          <p class="text-slate-400 text-sm mt-1">GitHub Project</p>
+        </div>
+      `;
+
+      // Remplacer l'image par le placeholder
+      this.parentNode.replaceChild(placeholder, this);
+    });
+
+    // Timeout pour les images qui mettent trop de temps à charger
+    setTimeout(() => {
+      if (!img.complete) {
+        img.dispatchEvent(new Event('error'));
+      }
+    }, 5000);
+  });
+
+  // Add intersection observer for project cards
+  const projectCards = document.querySelectorAll('#projects article');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('project-card');
+        }, index * 100);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  projectCards.forEach(card => {
+    observer.observe(card);
+  });
+});
+</script>

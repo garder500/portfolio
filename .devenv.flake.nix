@@ -1,7 +1,7 @@
 {
   inputs =
     let
-      version = "1.5.0";
+      version = "1.6.1";
 system = "x86_64-linux";
 devenv_root = "/home/exa/perso/portfolio";
 devenv_dotfile = ./.devenv;
@@ -24,7 +24,7 @@ devenv_direnvrc_latest_version = 1;
 
       outputs = { nixpkgs, ... }@inputs:
         let
-          version = "1.5.0";
+          version = "1.6.1";
 system = "x86_64-linux";
 devenv_root = "/home/exa/perso/portfolio";
 devenv_dotfile = ./.devenv;
@@ -108,9 +108,10 @@ devenv_direnvrc_latest_version = 1;
                 };
               })
             ] ++ (map importModule (devenv.imports or [ ])) ++ [
-              ./devenv.nix
+              (if builtins.pathExists ./devenv.nix then ./devenv.nix else { })
               (devenv.devenv or { })
               (if builtins.pathExists ./devenv.local.nix then ./devenv.local.nix else { })
+              (if builtins.pathExists (devenv_dotfile + "/cli-options.nix") then import (devenv_dotfile + "/cli-options.nix") else { })
             ];
           };
           config = project.config;

@@ -1,12 +1,200 @@
-<footer id="footer" class="text-white py-28">
-  <ul class="flex flex-wrap gap-5 justify-center">
-    {% for social in page.socials %}
-      <li class="bg-zinc-800 py-8 hover:bg-zinc-700 cursor-pointer px-4 w-fit h-full transform -skew-x-6 group rounded-lg flex flex-col justify-center items-center relative">
-        <a href="{{social.link}}" class="flex flex-col items-center">
-          <i class="{{social.icon}} text-5xl lg:text-4xl"></i>
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
+<footer id="footer" class="bg-slate-800/30 border-t border-blue-500/20 py-16 mt-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Main Footer Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
+
+      <!-- Brand Section -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-3 mb-6">
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+            <i class="fas fa-robot text-white text-lg"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-blue-400">Bot-Creator</h3>
+        </div>
+        <p class="text-slate-300 leading-relaxed mb-6 max-w-md">
+          Empowering automation through intelligent bot creation. Transform your workflow with our cutting-edge solutions that make complex tasks simple and efficient.
+        </p>
+        <div class="flex items-center space-x-4">
+          <span class="text-slate-400 text-sm">Follow our journey:</span>
+          <div class="flex space-x-3">
+            {% for social in page.socials %}
+            <a href="{{ social.link }}"
+               target="_blank"
+               class="group relative w-10 h-10 bg-slate-700/50 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
+               aria-label="{{ social.name | default: 'Social Link' }}">
+              <i class="{{ social.icon }} text-slate-300 group-hover:text-white transition-colors duration-300"></i>
+
+              <!-- Tooltip -->
+              {% if social.name %}
+              <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                {{ social.name }}
+              </div>
+              {% endif %}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-lg font-semibold text-blue-400 mb-4">Quick Links</h4>
+        <ul class="space-y-3">
+          <li>
+            <a href="/" class="text-slate-300 hover:text-blue-400 transition-colors duration-200 flex items-center">
+              <i class="fas fa-home text-sm mr-2"></i>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="/blog" class="text-slate-300 hover:text-blue-400 transition-colors duration-200 flex items-center">
+              <i class="fas fa-blog text-sm mr-2"></i>
+              Blog
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h4 class="text-lg font-semibold text-blue-400 mb-4">Get In Touch</h4>
+        <div class="space-y-3">
+          <div class="flex items-center text-slate-300">
+            <i class="fas fa-envelope text-blue-400 mr-3"></i>
+            <a href="mailto:contact@ketsuna.com" class="hover:text-blue-400 transition-colors duration-200">
+              contact@ketsuna.com
+            </a>
+          </div>
+          <div class="flex items-center text-slate-300">
+            <i class="fas fa-globe text-blue-400 mr-3"></i>
+            <span>France, Île-de-France</span>
+          </div>
+          <div class="flex items-center text-slate-300">
+            <i class="fas fa-clock text-blue-400 mr-3"></i>
+            <span>Available 24/7</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-slate-700/50 pt-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <!-- Copyright -->
+        <div class="text-slate-400 text-sm text-center md:text-left">
+          <p>&copy; {{ 'now' | date: "%Y" }} Jérémy Soler All rights reserved.</p>
+          <p class="mt-1">Built with ❤️ for automation enthusiasts</p>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="flex items-center space-x-4 text-slate-400 text-sm">
+          <span>Powered by:</span>
+          <div class="flex items-center space-x-2">
+            <i class="fab fa-jekyll text-red-400"></i>
+            <span>Jekyll</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fab fa-github text-slate-300"></i>
+            <span>GitHub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+            class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 pointer-events-none z-50"
+            aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+  </div>
 </footer>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Back to top functionality
+  const backToTopBtn = document.getElementById('back-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      backToTopBtn.style.opacity = '1';
+      backToTopBtn.style.pointerEvents = 'auto';
+    } else {
+      backToTopBtn.style.opacity = '0';
+      backToTopBtn.style.pointerEvents = 'none';
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  // Newsletter form handling
+  const newsletterForm = document.querySelector('footer form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = e.target.querySelector('input[type="email"]').value;
+      if (email) {
+        // Add your newsletter signup logic here
+        alert('Thank you for subscribing!');
+        e.target.reset();
+      }
+    });
+  }
+
+  // Social links analytics (optional)
+  document.querySelectorAll('footer a[target="_blank"]').forEach(link => {
+    link.addEventListener('click', () => {
+      // Add analytics tracking here if needed
+      console.log('Social link clicked:', link.href);
+    });
+  });
+});
+</script>
+
+<style>
+/* Footer specific animations */
+#footer {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.4) 100%);
+}
+
+/* Social icons hover effects */
+footer .group:hover i {
+  transform: scale(1.1);
+}
+
+/* Newsletter input focus effects */
+footer input:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Back to top button animation */
+#back-to-top {
+  transform: translateY(100px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#back-to-top.show {
+  transform: translateY(0);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  footer .grid {
+    text-align: center;
+  }
+
+  footer .flex.items-center {
+    justify-content: center;
+  }
+}
+</style>

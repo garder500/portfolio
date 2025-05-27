@@ -1,51 +1,213 @@
 <!-- _includes/skills.html -->
-<div id="skills" class="flex flex-col gap-5 mt-10">
-  <h2 class="uppercase text-4xl font-semibold">Skills</h2>
-  <ul class="grid grid-cols-1 lg:grid-cols-5 grid-rows-2 gap-5" id="skills-grid">
+<section id="skills" class="py-16" data-animate>
+  <div class="text-center mb-12">
+    <h2 class="text-4xl lg:text-5xl font-bold text-blue-400 mb-4">
+      Technologies & Tools
+    </h2>
+    <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+      The powerful stack behind Bot-Creator's automation solutions
+    </p>
+    <div class="w-24 h-1 bg-blue-500 mx-auto mt-4"></div>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6" id="skills-grid">
     {% for quality in page.qualities %}
-    <li class="bg-zinc-800 gap-2 w-full py-10 h-fit transform -skew-x-6 group rounded-lg flex flex-col justify-center items-center" data-skill-item>
-        <img class="w-16 saturate-0 group-hover:saturate-100" 
-             src="{{ quality.image }}" 
-             alt="{{ quality.title }} logo"
-             data-skill-image>
-        <h3>{{ quality.title }}</h3>
-      </li>
+    <div class="skill-card group relative bg-slate-800/50 border border-blue-500/20 rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-400/40"
+         data-skill-item>
+      <!-- Background Glow Effect -->
+      <div class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl"
+           data-glow-bg></div>
+
+      <!-- Content -->
+      <div class="relative z-10 flex flex-col items-center text-center space-y-4">
+        <!-- Icon Container -->
+        <div class="relative">
+          <div class="w-16 h-16 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-slate-600/50 transition-colors duration-300">
+            <img class="w-10 h-10 saturate-0 group-hover:saturate-100 transition-all duration-300 group-hover:scale-110"
+                 src="{{ quality.image }}"
+                 alt="{{ quality.title }} logo"
+                 data-skill-image>
+          </div>
+          <!-- Animated Ring -->
+          <div class="absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-blue-400/50 transition-all duration-300"></div>
+        </div>
+
+        <!-- Title -->
+        <h3 class="text-sm font-semibold text-slate-200 group-hover:text-blue-300 transition-colors duration-300">
+          {{ quality.title }}
+        </h3>
+
+        <!-- Optional Description -->
+        {% if quality.description %}
+        <p class="text-xs text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {{ quality.description }}
+        </p>
+        {% endif %}
+
+        <!-- Proficiency Level (Optional) -->
+        {% if quality.level %}
+        <div class="w-full bg-slate-700 rounded-full h-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div class="bg-gradient-to-r from-blue-500 to-blue-400 h-1.5 rounded-full transition-all duration-500"
+               style="width: {{ quality.level }}%"></div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Hover Indicator -->
+      <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <i class="fas fa-arrow-up-right text-blue-400 text-xs"></i>
+      </div>
+    </div>
     {% endfor %}
-  </ul>
-</div>
+  </div>
+
+  <!-- Skills Categories (Optional) -->
+  <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="text-center p-6 bg-slate-800/30 border border-blue-500/10 rounded-xl">
+      <div class="text-blue-400 text-3xl mb-3">
+        <i class="fas fa-code"></i>
+      </div>
+      <h3 class="text-lg font-bold text-blue-400 mb-2">Development</h3>
+      <p class="text-slate-300 text-sm">Full-stack development with modern frameworks and tools</p>
+    </div>
+
+    <div class="text-center p-6 bg-slate-800/30 border border-blue-500/10 rounded-xl">
+      <div class="text-blue-400 text-3xl mb-3">
+        <i class="fas fa-robot"></i>
+      </div>
+      <h3 class="text-lg font-bold text-blue-400 mb-2">Automation</h3>
+      <p class="text-slate-300 text-sm">Bot creation and process automation solutions</p>
+    </div>
+
+    <div class="text-center p-6 bg-slate-800/30 border border-blue-500/10 rounded-xl">
+      <div class="text-blue-400 text-3xl mb-3">
+        <i class="fas fa-cloud"></i>
+      </div>
+      <h3 class="text-lg font-bold text-blue-400 mb-2">Cloud & DevOps</h3>
+      <p class="text-slate-300 text-sm">Scalable infrastructure and deployment strategies</p>
+    </div>
+  </div>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const skillImages = document.querySelectorAll('[data-skill-image]');
+  const skillItems = document.querySelectorAll('[data-skill-item]');
 
-  skillImages.forEach(img => {
+  skillItems.forEach(item => {
+    const img = item.querySelector('[data-skill-image]');
+    const glowBg = item.querySelector('[data-glow-bg]');
+
+    if (!img || !glowBg) return;
+
     const tempImg = new Image();
     tempImg.crossOrigin = "Anonymous";
     tempImg.src = img.src;
-        
+
     tempImg.onload = async () => {
       try {
         const vibrant = new Vibrant(tempImg);
         const palette = await vibrant.getPalette();
-        const color = palette.Vibrant?.hex + "50" || '#1f2937';                
-        const parentItem = img.closest('[data-skill-item]');
-        parentItem.style.setProperty('--hover-bg-color', color);
+
+        // Extract multiple colors for better effect
+        const vibrantColor = palette.Vibrant?.hex || '#3b82f6';
+        const lightVibrantColor = palette.LightVibrant?.hex || '#60a5fa';
+
+        // Set CSS custom properties
+        item.style.setProperty('--skill-primary-color', vibrantColor);
+        item.style.setProperty('--skill-secondary-color', lightVibrantColor);
+
+        // Apply glow effect
+        glowBg.style.background = `radial-gradient(circle, ${vibrantColor}40 0%, transparent 70%)`;
+
+        // Add hover effect for border
+        item.addEventListener('mouseenter', () => {
+          item.style.borderColor = vibrantColor + '60';
+        });
+
+        item.addEventListener('mouseleave', () => {
+          item.style.borderColor = '';
+        });
+
       } catch (error) {
-        console.error('Color extraction failed:', error);
+        console.error('Color extraction failed for:', img.src, error);
+        // Fallback colors
+        item.style.setProperty('--skill-primary-color', '#3b82f6');
+        item.style.setProperty('--skill-secondary-color', '#60a5fa');
       }
     };
+
+    tempImg.onerror = () => {
+      console.warn('Failed to load image:', img.src);
+    };
   });
+
+  // Staggered animation for skill cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('animate-fade-in-up');
+        }, index * 100);
+      }
+    });
+  });
+
+  skillItems.forEach(item => observer.observe(item));
 });
 </script>
 
 <style>
-[data-skill-item] {
-  transition: background-color 0.3s ease;
+/* Enhanced skill card animations */
+.skill-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
 }
 
-[data-skill-item]:hover {
-  background-color: var(--hover-bg-color, #1f2937); /* Fallback to zinc-800 */
+.skill-card.animate-fade-in-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom hover effects using extracted colors */
+.skill-card:hover {
+  background: linear-gradient(135deg,
+    rgba(var(--skill-primary-color-rgb, 59, 130, 246), 0.1) 0%,
+    rgba(var(--skill-secondary-color-rgb, 96, 165, 250), 0.05) 100%);
+}
+
+/* Proficiency bar animation */
+.skill-card:hover .bg-gradient-to-r {
+  animation: fillBar 1s ease-out forwards;
+}
+
+@keyframes fillBar {
+  from { width: 0%; }
+  to { width: var(--bar-width, 0%); }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .skill-card {
+    padding: 1rem;
+  }
+
+  .skill-card img {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Loading state */
+.skill-card[data-loading="true"] {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 </style>
-

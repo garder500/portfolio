@@ -38,4 +38,3 @@ socials: [
 {% include hero.html %}
 {% include skills.html %}
 {% include projects.html %}
-{% include footer.html %}
