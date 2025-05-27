@@ -7,15 +7,16 @@
       <div class="lg:col-span-2">
         <div class="flex items-center space-x-3 mb-6">
           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
-            <i class="fas fa-robot text-white text-lg"></i>
+            <i class="fas fa-code text-white text-lg"></i>
           </div>
-          <h3 class="text-2xl font-bold text-blue-400">Bot-Creator</h3>
+          <h3 class="text-2xl font-bold text-blue-400">Jérémy Soler</h3>
         </div>
         <p class="text-slate-300 leading-relaxed mb-6 max-w-md">
-          Empowering automation through intelligent bot creation. Transform your workflow with our cutting-edge solutions that make complex tasks simple and efficient.
+          Développeur fullstack passionné par l'automatisation et la création de solutions innovantes.
+          Spécialisé dans le développement de bots et l'optimisation des workflows.
         </p>
         <div class="flex items-center space-x-4">
-          <span class="text-slate-400 text-sm">Follow our journey:</span>
+          <span class="text-slate-400 text-sm">Suivez-moi :</span>
           <div class="flex space-x-3">
             {% for social in page.socials %}
             <a href="{{ social.link }}"
@@ -36,14 +37,26 @@
         </div>
       </div>
 
-      <!-- Quick Links -->
+      <!-- Navigation -->
       <div>
-        <h4 class="text-lg font-semibold text-blue-400 mb-4">Quick Links</h4>
+        <h4 class="text-lg font-semibold text-blue-400 mb-4">Navigation</h4>
         <ul class="space-y-3">
           <li>
             <a href="/" class="text-slate-300 hover:text-blue-400 transition-colors duration-200 flex items-center">
               <i class="fas fa-home text-sm mr-2"></i>
-              Home
+              Accueil
+            </a>
+          </li>
+          <li>
+            <a href="/#skills" class="text-slate-300 hover:text-blue-400 transition-colors duration-200 flex items-center">
+              <i class="fas fa-cogs text-sm mr-2"></i>
+              Compétences
+            </a>
+          </li>
+          <li>
+            <a href="/#projects" class="text-slate-300 hover:text-blue-400 transition-colors duration-200 flex items-center">
+              <i class="fas fa-folder-open text-sm mr-2"></i>
+              Projets
             </a>
           </li>
           <li>
@@ -57,22 +70,53 @@
 
       <!-- Contact Info -->
       <div>
-        <h4 class="text-lg font-semibold text-blue-400 mb-4">Get In Touch</h4>
+        <h4 class="text-lg font-semibold text-blue-400 mb-4">Contact</h4>
         <div class="space-y-3">
           <div class="flex items-center text-slate-300">
             <i class="fas fa-envelope text-blue-400 mr-3"></i>
-            <a href="mailto:contact@ketsuna.com" class="hover:text-blue-400 transition-colors duration-200">
-              contact@ketsuna.com
+            <a href="mailto:contact@jeremysoler.com" class="hover:text-blue-400 transition-colors duration-200">
+              contact@jeremysoler.com
             </a>
           </div>
           <div class="flex items-center text-slate-300">
-            <i class="fas fa-globe text-blue-400 mr-3"></i>
-            <span>France, Île-de-France</span>
+            <i class="fas fa-map-marker-alt text-blue-400 mr-3"></i>
+            <span>Ivry-sur-Seine, France</span>
+          </div>
+          <div class="flex items-center text-slate-300">
+            <i class="fas fa-briefcase text-blue-400 mr-3"></i>
+            <span>Développeur chez Everbloo</span>
           </div>
           <div class="flex items-center text-slate-300">
             <i class="fas fa-clock text-blue-400 mr-3"></i>
-            <span>Available 24/7</span>
+            <span>Disponible pour projets</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Summary -->
+    <div class="border-t border-slate-700/50 pt-8 pb-8">
+      <div class="text-center mb-6">
+        <h4 class="text-lg font-semibold text-blue-400 mb-3">Technologies principales</h4>
+        <div class="flex flex-wrap justify-center gap-3">
+          <span class="px-3 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+            JavaScript
+          </span>
+          <span class="px-3 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+            Python
+          </span>
+          <span class="px-3 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+            Node.js
+          </span>
+          <span class="px-3 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+            React
+          </span>
+          <span class="px-3 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+            Docker
+          </span>
+          <span class="px-3 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+            AWS
+          </span>
         </div>
       </div>
     </div>
@@ -82,20 +126,29 @@
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
         <!-- Copyright -->
         <div class="text-slate-400 text-sm text-center md:text-left">
-          <p>&copy; {{ 'now' | date: "%Y" }} Jérémy Soler All rights reserved.</p>
-          <p class="mt-1">Built with ❤️ for automation enthusiasts</p>
+          <p>&copy; {{ 'now' | date: "%Y" }} Jérémy Soler. Tous droits réservés.</p>
+          <p class="mt-1">Développé avec ❤️ et beaucoup de ☕</p>
         </div>
 
-        <!-- Tech Stack -->
-        <div class="flex items-center space-x-4 text-slate-400 text-sm">
-          <span>Powered by:</span>
+        <!-- Status & Tech Stack -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 text-slate-400 text-sm">
+          <!-- Status -->
           <div class="flex items-center space-x-2">
-            <i class="fab fa-jekyll text-red-400"></i>
-            <span>Jekyll</span>
+            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span>Disponible pour missions</span>
           </div>
-          <div class="flex items-center space-x-2">
-            <i class="fab fa-github text-slate-300"></i>
-            <span>GitHub</span>
+
+          <!-- Tech Stack -->
+          <div class="flex items-center space-x-4">
+            <span>Propulsé par :</span>
+            <div class="flex items-center space-x-2">
+              <i class="fab fa-jekyll text-red-400"></i>
+              <span>Jekyll</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <i class="fab fa-github text-slate-300"></i>
+              <span>GitHub</span>
+            </div>
           </div>
         </div>
       </div>
@@ -104,7 +157,7 @@
     <!-- Back to Top Button -->
     <button id="back-to-top"
             class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 pointer-events-none z-50"
-            aria-label="Back to top">
+            aria-label="Retour en haut">
       <i class="fas fa-arrow-up"></i>
     </button>
   </div>
@@ -132,26 +185,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Newsletter form handling
-  const newsletterForm = document.querySelector('footer form');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
+  // Smooth scroll pour les liens d'ancrage
+  document.querySelectorAll('footer a[href^="/#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      const email = e.target.querySelector('input[type="email"]').value;
-      if (email) {
-        // Add your newsletter signup logic here
-        alert('Thank you for subscribing!');
-        e.target.reset();
+      const targetId = this.getAttribute('href').substring(2);
+      const targetElement = document.getElementById(targetId);
+
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
     });
-  }
+  });
 
   // Social links analytics (optional)
   document.querySelectorAll('footer a[target="_blank"]').forEach(link => {
     link.addEventListener('click', () => {
-      // Add analytics tracking here if needed
-      console.log('Social link clicked:', link.href);
+      console.log('Lien social cliqué:', link.href);
     });
+  });
+
+  // Animation pour les badges de compétences
+  const skillBadges = document.querySelectorAll('footer span[class*="bg-blue-600/20"]');
+  const observerSkills = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.style.transform = 'scale(1)';
+          entry.target.style.opacity = '1';
+        }, index * 100);
+      }
+    });
+  });
+
+  skillBadges.forEach(badge => {
+    badge.style.transform = 'scale(0.8)';
+    badge.style.opacity = '0';
+    badge.style.transition = 'all 0.3s ease';
+    observerSkills.observe(badge);
   });
 });
 </script>
@@ -167,9 +241,25 @@ footer .group:hover i {
   transform: scale(1.1);
 }
 
-/* Newsletter input focus effects */
-footer input:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+/* Status indicator animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Skill badges hover effect */
+footer span[class*="bg-blue-600/20"]:hover {
+  background-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 /* Smooth scroll behavior */
@@ -194,6 +284,10 @@ html {
   }
 
   footer .flex.items-center {
+    justify-content: center;
+  }
+
+  footer .flex.flex-wrap {
     justify-content: center;
   }
 }

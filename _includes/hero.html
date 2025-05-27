@@ -1,21 +1,152 @@
 <div class="flex gap-20 w-full justify-between h-fit items-center py-10">
-  <div class="flex flex-col gap-5 lg:gap-2">
-    <h1 class="text-5xl font-bold">
-      Hello, I'm <span class="text-purple-500">Jeremy Soler</span>
-    </h1>
-    <p onclick="alert('Fullstack Developer')" class="w-full lg:w-fit text-xl lg:text-lg hover:cursor-pointer bg-zinc-950 p-2 px-3 rounded-lg font-bold">
-      <span class="text-blue-500" >alert</span>(
-      <span class="text-yellow-500">"Fullstack Developer"</span>);
+<div class="flex flex-col gap-5 lg:gap-2">
+  <h1 class="text-5xl font-bold">
+    Salut, je suis <span class="text-blue-400">Jérémy Soler</span>
+  </h1>
+
+  <!-- Code snippet interactif -->
+  <div class="relative">
+    <p id="code-snippet" class="w-full lg:w-fit text-xl lg:text-lg hover:cursor-pointer bg-slate-800/50 border border-blue-500/20 p-2 px-3 rounded-lg font-bold transition-all duration-200 hover:bg-slate-700/50 hover:border-blue-400/40 hover:scale-105">
+      <span class="text-blue-400">console.log</span>(
+      <span class="text-cyan-300">"Développeur Fullstack"</span>);
     </p>
 
-    <p class="max-w-[50rem] mt-5 text-xl lg:text-lg text-zinc-400">
-      I'm a passionate developer with a focus on creating efficient, scalable, and user-friendly solutions. Below, you'll find more about my skills, projects, and the tools I use to bring ideas to life.
-    </p>
+    <!-- Toast notification -->
+    <div id="toast" class="absolute top-full left-0 mt-2 px-4 py-2 bg-slate-800 border border-blue-500/30 rounded-lg shadow-lg opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2 z-10">
+      <div class="flex items-center space-x-2">
+        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+        <span class="text-green-300 text-sm font-medium">Code exécuté avec succès !</span>
+      </div>
+    </div>
   </div>
+
+  <p class="max-w-[50rem] mt-5 text-xl lg:text-lg text-slate-300">
+    Développeur passionné spécialisé dans la création de solutions web modernes et l'automatisation.
+    Découvrez mes compétences, projets et les technologies que j'utilise pour donner vie aux idées.
+  </p>
+
+  <!-- Badges de statut -->
+  <div class="flex flex-wrap gap-3 mt-4">
+    <span class="inline-flex items-center px-3 py-1 text-sm bg-green-600/20 text-green-300 rounded-full border border-green-500/30">
+      <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+      Disponible pour projets
+    </span>
+    <span class="inline-flex items-center px-3 py-1 text-sm bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30">
+      <i class="fas fa-map-marker-alt mr-2"></i>
+      Île-de-France
+    </span>
+    <span class="inline-flex items-center px-3 py-1 text-sm bg-purple-600/20 text-purple-300 rounded-full border border-purple-500/30">
+      <i class="fas fa-briefcase mr-2"></i>
+      Everbloo
+    </span>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const codeSnippet = document.getElementById('code-snippet');
+  const toast = document.getElementById('toast');
+  let toastTimeout;
+
+  // Messages aléatoires pour varier l'expérience
+  const messages = [
+    { text: "Code exécuté avec succès !", icon: "✅", color: "green" },
+    { text: "Développeur Fullstack activé !", icon: "🚀", color: "blue" },
+    { text: "Console.log() → Succès !", icon: "💻", color: "green" },
+    { text: "Mission: Créer du code génial !", icon: "⚡", color: "yellow" },
+    { text: "Status: Ready to code !", icon: "🔥", color: "orange" }
+  ];
+
+  codeSnippet.addEventListener('click', () => {
+    // Sélectionner un message aléatoire
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+    // Mettre à jour le contenu du toast
+    toast.innerHTML = `
+      <div class="flex items-center space-x-2">
+        <span class="text-lg">${randomMessage.icon}</span>
+        <span class="text-${randomMessage.color}-300 text-sm font-medium">${randomMessage.text}</span>
+      </div>
+    `;
+
+    // Annuler le timeout précédent s'il existe
+    if (toastTimeout) {
+      clearTimeout(toastTimeout);
+    }
+
+    // Afficher le toast avec animation
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    // Effet de "typing" sur le code snippet
+    codeSnippet.classList.add('animate-pulse');
+
+    // Masquer le toast après 3 secondes
+    toastTimeout = setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      codeSnippet.classList.remove('animate-pulse');
+    }, 3000);
+
+    // Effet sonore (optionnel)
+    // playClickSound();
+  });
+
+  // Fonction pour jouer un son (optionnel)
+  function playClickSound() {
+    // Créer un contexte audio pour un petit "bip" satisfaisant
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  }
+});
+</script>
+
+<style>
+/* Animation personnalisée pour le code snippet */
+@keyframes codeGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+#code-snippet:hover {
+  animation: codeGlow 2s ease-in-out infinite;
+}
+
+/* Toast responsive */
+@media (max-width: 768px) {
+  #toast {
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  #toast.opacity-100 {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+</style>
+
+
 
   <div class="relative w-[26rem] h-[10rem] hidden 2xl:block">
     <div class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-purple-500 rounded-lg transform -skew-x-6 "></div>
-     
+
     <img
       class="absolute left-[40%] top-[50%] translate-y-[-50%] translate-x-[-25%] blur-xl opacity-40 brightness-0"
       src="https://cdn3.emoji.gg/unicode/microsoft/rocket.png"

@@ -1,13 +1,14 @@
 <section id="projects" class="py-16" data-animate>
-  <div class="text-center mb-12">
-    <h2 class="text-4xl lg:text-5xl font-bold text-blue-400 mb-4">
-      Featured Projects
-    </h2>
-    <p class="text-xl text-slate-300 max-w-2xl mx-auto">
-      Discover the automation solutions and tools we've built to streamline workflows
-    </p>
-    <div class="w-24 h-1 bg-blue-500 mx-auto mt-4"></div>
-  </div>
+<div class="text-center mb-12">
+  <h2 class="text-4xl lg:text-5xl font-bold text-blue-400 mb-4">
+    Mes Projets
+  </h2>
+  <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+    Découvrez une sélection de mes réalisations, des applications web aux solutions d'automatisation
+  </p>
+  <div class="w-24 h-1 bg-blue-500 mx-auto mt-4"></div>
+</div>
+
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     {% for project in page.projects %}
@@ -15,7 +16,7 @@
       <!-- Project Image -->
       <div class="relative overflow-hidden">
         <img class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-110"
-             src="https://opengraph.githubassets.com/eaf95acb7a4845b6e1b275d8e4d06d26c59443e26c788ef62cea6d9922e38a06/garder500/{{ project.link | split: '/' | last }}"
+             data-project-repo="{{ project.link | split: '/' | last }}"
              alt="{{ project.title }} Preview"
              loading="lazy">
 
@@ -138,28 +139,28 @@
   </div>
 
   <!-- Call to Action -->
-  <div class="mt-16 text-center">
-    <div class="bg-gradient-to-r from-blue-800/20 to-blue-600/20 border border-blue-500/30 rounded-2xl p-8">
-      <h3 class="text-2xl font-bold text-blue-400 mb-4">Want to Collaborate?</h3>
-      <p class="text-slate-300 mb-6 max-w-2xl mx-auto">
-        I'm always looking for new opportunities to build innovative automation solutions.
-        Let's create something amazing together!
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://github.com/garder500"
-           target="_blank"
-           class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
-          <i class="fab fa-github mr-2"></i>
-          View All Projects
-        </a>
-        <a href="#footer"
-           class="inline-flex items-center px-6 py-3 border border-blue-500 text-blue-400 hover:bg-blue-500/10 font-semibold rounded-lg transition-colors">
-          <i class="fas fa-envelope mr-2"></i>
-          Get In Touch
-        </a>
-      </div>
+<div class="mt-16 text-center">
+  <div class="bg-gradient-to-r from-blue-800/20 to-blue-600/20 border border-blue-500/30 rounded-2xl p-8">
+    <h3 class="text-2xl font-bold text-blue-400 mb-4">Travaillons ensemble !</h3>
+    <p class="text-slate-300 mb-6 max-w-2xl mx-auto">
+      Vous avez un projet en tête ? Je serais ravi de discuter de vos besoins et de voir comment
+      mes compétences peuvent vous aider à atteindre vos objectifs.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="mailto:contact@jeremysoler.com"
+         class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+        <i class="fas fa-envelope mr-2"></i>
+        Me contacter
+      </a>
+      <a href="https://github.com/garder500?tab=repositories"
+       target="_blank"
+         class="inline-flex items-center px-6 py-3 border border-blue-500 text-blue-400 hover:bg-blue-500/10 font-semibold rounded-lg transition-colors">
+        <i class="fas fa-eye mr-2"></i>
+        Voir mes projets
+      </a>
     </div>
   </div>
+</div>
 </section>
 
 <style>
@@ -202,37 +203,78 @@
 </style>
 
 <script>
-
 document.addEventListener('DOMContentLoaded', () => {
+  // Fonction pour générer un hash hexadécimal aléatoire de 64 caractères
+  function generateRandomHex(length = 64) {
+    const hexChars = '0123456789abcdef';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += hexChars[Math.floor(Math.random() * hexChars.length)];
+    }
+    return result;
+  }
 
-  const projectImages = document.querySelectorAll('#projects img');
+  // Générer un hash aléatoire au chargement de la page
+  const randomHash = generateRandomHex(64);
+  console.log('🎲 Hash généré:', randomHash);
 
-  projectImages.forEach(img => {
-    img.addEventListener('error', function() {
-      // Marquer l'image comme en erreur
-      this.setAttribute('data-error', 'true');
+  // Configuration
+  const config = {
+    hash: randomHash,
+    user: 'garder500',
+    timeout: 5000
+  };
 
-      // Créer un placeholder
-      const placeholder = document.createElement('div');
-      placeholder.className = 'project-placeholder aspect-[16/9] w-full bg-gradient-to-br from-blue-600/20 to-blue-800/20 flex items-center justify-center';
-      placeholder.innerHTML = `
-        <div class="text-center">
-          <i class="fas fa-code text-4xl text-blue-400 mb-2"></i>
-          <p class="text-blue-300 font-semibold">${this.alt.replace(' Preview', '')}</p>
-          <p class="text-slate-400 text-sm mt-1">GitHub Project</p>
-        </div>
-      `;
+  // Sélectionner toutes les images de projets
+  const projectImages = document.querySelectorAll('#projects img[data-project-repo]');
 
-      // Remplacer l'image par le placeholder
-      this.parentNode.replaceChild(placeholder, this);
-    });
+  projectImages.forEach((img, index) => {
+    const repoName = img.getAttribute('data-project-repo');
 
-    // Timeout pour les images qui mettent trop de temps à charger
-    setTimeout(() => {
-      if (!img.complete) {
-        img.dispatchEvent(new Event('error'));
-      }
-    }, 5000);
+    if (repoName) {
+      // Construire l'URL avec le hash aléatoire
+      const githubImageUrl = `https://opengraph.githubassets.com/${config.hash}/${config.user}/${repoName}`;
+
+      // Définir la source de l'image
+      img.src = githubImageUrl;
+
+      // Gestion des erreurs de chargement
+      img.addEventListener('error', function() {
+        console.warn(`❌ Échec du chargement pour ${repoName}, création du fallback`);
+
+        // Créer un placeholder
+        const placeholder = document.createElement('div');
+        placeholder.className = 'project-placeholder aspect-[16/9] w-full bg-gradient-to-br from-blue-600/20 to-blue-800/20 flex items-center justify-center';
+        placeholder.innerHTML = `
+          <div class="text-center">
+            <i class="fas fa-code text-4xl text-blue-400 mb-2"></i>
+            <p class="text-blue-300 font-semibold">${this.alt.replace(' Preview', '')}</p>
+            <p class="text-slate-400 text-sm mt-1">GitHub Project</p>
+          </div>
+        `;
+
+        // Remplacer l'image par le placeholder
+        this.parentNode.replaceChild(placeholder, this);
+      });
+
+      // Gestion du chargement réussi
+      img.addEventListener('load', function() {
+        console.log(`✅ Image chargée pour ${repoName}`);
+        this.style.opacity = '1';
+      });
+
+      // Style initial pour l'animation de fade-in
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.3s ease';
+
+      // Timeout pour les images qui mettent trop de temps à charger
+      setTimeout(() => {
+        if (!img.complete || img.naturalHeight === 0) {
+          console.warn(`⏰ Timeout pour ${repoName}, création du fallback`);
+          img.dispatchEvent(new Event('error'));
+        }
+      }, config.timeout);
+    }
   });
 
   // Add intersection observer for project cards
